@@ -10,22 +10,52 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 
 
+class App extends React.Component {
+  
+  
+  
+  state = {
+    selectedOption: "None",
+    dropDownOptions: ["Hotels", "Flights", "Tourist"],
+    
+    chatResponse:""
+  }
+  
+ componentWillMount() {
+this._onSelect = this._onSelect.bind(this);
+this.handleSubmit = this.handleSubmit.bind(this);
+ }
 
-
-class App extends Component {
-
-
-
-state = {
-  selectedOption: "None",
-  dropDownOptions: ["Hotels", "Flights", "Tourist"]
-}
 
 
   _onSelect = (selectedOption) => {
-    this.setState({ selectedOption });
-   
+    this.setState({ selectedOption }); 
   };
+
+  GetService() {
+    /*
+    const requestOptions = {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ service: 'Selected Service From Dropdown' })
+    };
+    fetch('https://FromOurKafka', requestOptions)
+        .then(response => response.json())
+        .then(data => this.setState({ chatResponse: data }));
+        */
+    
+    this.setState({chatResponse: this.state.selectedOption })
+
+    
+}
+
+
+handleSubmit = (event) => {
+    if (event != null) {
+      event.preventDefault();
+    }
+    this.GetService()
+  }
 
 
   render() {
@@ -43,12 +73,9 @@ state = {
 
   <div style ={{top:500}}>
 
-   <Button
-                        onClick={this.handleSubmit}
-                       
-                      >
-                        get service
-                      </Button>
+   <Button onClick={this.handleSubmit} >
+    get service
+    </Button>
   </div>
 
  <React.Fragment>
@@ -56,7 +83,8 @@ state = {
       <Container maxWidth="sm">
        
         <Typography component="div" style={{ backgroundColor: '#cfe8fc', height: '50vh' }} >
- [output goes here]
+          [service response]
+          
           </Typography>
         
       </Container>
