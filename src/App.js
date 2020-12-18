@@ -61,22 +61,9 @@ handleSubmit = (event) => {
   render() {
     return(
     <div className="App">
-<div style ={{left:500}}>
-
-  <Dropdown
-   value={this.state.selectedOption}
-   onChange={this._onSelect}
-   options={this.state.dropDownOptions}
- />
-</div>
 
 
-  <div style ={{top:500}}>
 
-   <Button onClick={this.handleSubmit} >
-    get service
-    </Button>
-  </div>
 
  <React.Fragment>
       <CssBaseline />
@@ -90,7 +77,19 @@ handleSubmit = (event) => {
       </Container>
     </React.Fragment>
 
+  <Button onClick={this.handleSubmit} >
+    get service
+    </Button>
 
+
+
+  <Dropdown
+   value={this.state.selectedOption}
+   onChange={this._onSelect}
+   options={this.state.dropDownOptions}
+ />
+↓
+  
     </div>
 
     
