@@ -17,16 +17,22 @@ import TextField from '@material-ui/core/TextField';
 class App extends Component {
 
   state = {
-    selectedOption: "None",
     dropDownOptions: ["hotel", "airport", "tourism"],
 
-    city:"",
+   
     
     chatResponse:"",
 
+
+
     userMessage:"",
+    id:"",
+    city:"",
+    selectedCity: "None",
     hotelMessage:"",
+    
     airportMserMessage:"",
+    
     touristMessage:""
 
 
@@ -128,7 +134,7 @@ handleUserSubmit = () => {
       </p>
 
         <Dropdown
-          value={this.state.selectedOption}
+          value={this.state.selectedCity}
           onChange={this._onSelect}
           options={this.state.dropDownOptions}
         />
