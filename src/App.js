@@ -17,7 +17,8 @@ import TextField from '@material-ui/core/TextField';
 class App extends Component {
 
   state = {
-    dropDownOptions: ["hotel", "airport", "tourism"],
+    cityOptions: ["city1", "city2", "city3"],
+    topicOptions: ["hotel", "airport", "tourism"],
 
    
     
@@ -26,9 +27,10 @@ class App extends Component {
 
 
     userMessage:"",
+    name:"",
     id:"",
-    city:"",
-    selectedCity: "None",
+    selectedCity: "City",
+    selectedTopic:"Topic",
     hotelMessage:"",
     
     airportMserMessage:"",
@@ -51,16 +53,15 @@ this.handleUserSubmit = this.handleUserSubmit.bind(this);
     this.setState({chatResponse: this.state.selectedOption })
   };
 
-  GetService() {
+  SomeGet() {
     fetch('http://localhost:9001/kafka/message/1/tourism',{
        method:'GET',
     headers:{
-           
             'Accept':'application/json',
             'Content-Type':'application/json',
             'Access-Control-Allow-Origin':'*'
         },
-        mode:'cors',
+        mode:'no-cors',
     }).then((response) => response.json())
       .then((data) => {
         this.setState({
@@ -71,9 +72,28 @@ this.handleUserSubmit = this.handleUserSubmit.bind(this);
     console.log(this.state.chatResponse);
   }
 
+postUser(){
+fetch('localhost:9003/kafka/message', {
+  method: 'POST',
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin':'*'
+  },mode:'cors',
+  body: JSON.stringify({
+    id: this.state.id,
+    topic: this.state.selectedTopic,
+    name: this.state.name,
+    city: this.state.city,
+    message: this.state.userMessage
+  })
+})
+}
+
+
 handleUserSubmit = () => {
-   console.log(this.state.city)
-  
+   this.postUser()
+
     //this.GetService()
   }
 
@@ -111,33 +131,36 @@ handleUserSubmit = () => {
      
 <p className="control">
         <TextField
-          label="Write a message"
-          multiline
-          rowsMax={4}
-          id="userMessage"
-          value={this.state.userMessage}
+          label="Name"
+          id="name"
+          value={this.state.name}
           onChange={this.onInputChange}
-          
+          variant='outlined'
           />
       </p>
 
 <p className="control">
         <TextField
-          label="Write a message"
-          multiline
-          rowsMax={4}
-          id="userMessage"
-          value={this.state.userMessage}
+          label="id"
+          id="id"
+          value={this.state.id}
           onChange={this.onInputChange}
-          
+          variant='outlined'
           />
       </p>
 
         <Dropdown
           value={this.state.selectedCity}
           onChange={this._onSelect}
-          options={this.state.dropDownOptions}
+          options={this.state.cityOptions}
         />
+
+       <Dropdown
+          value={this.state.selectedTopic}
+          onChange={this._onSelect}
+          options={this.state.topicOptions}
+        />
+
 
       <p className="control">
         <TextField
